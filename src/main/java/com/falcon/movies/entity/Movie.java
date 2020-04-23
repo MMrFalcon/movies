@@ -21,7 +21,7 @@ public class Movie extends BaseEntity implements Serializable {
     private MovieType movieType;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinColumn(nullable = false, name = "author_id")
+    @JoinColumn(nullable = false)
     private Author author;
 
     public String getTitle() {
