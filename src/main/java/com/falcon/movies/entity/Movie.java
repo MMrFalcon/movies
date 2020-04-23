@@ -3,6 +3,7 @@ package com.falcon.movies.entity;
 import com.falcon.movies.entity.enumeration.MovieType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import java.util.Objects;
 @Entity
 public class Movie extends BaseEntity implements Serializable {
 
+    @NotNull
     @Column(nullable = false, unique = true)
     private String title;
 
@@ -17,9 +19,12 @@ public class Movie extends BaseEntity implements Serializable {
 
     private LocalDate productionDate;
 
-    @Enumerated
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private MovieType movieType;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(nullable = false)
     private Author author;
