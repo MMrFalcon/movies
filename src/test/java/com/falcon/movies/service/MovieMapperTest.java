@@ -1,5 +1,7 @@
 package com.falcon.movies.service;
 
+import com.falcon.movies.service.mapper.MovieMapper;
+import com.falcon.movies.service.mapper.MovieMapperImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

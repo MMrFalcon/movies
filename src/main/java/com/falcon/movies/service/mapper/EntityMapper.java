@@ -1,4 +1,4 @@
-package com.falcon.movies.service;
+package com.falcon.movies.service.mapper;
 
 import java.util.List;
 

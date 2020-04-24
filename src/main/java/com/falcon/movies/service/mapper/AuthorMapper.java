@@ -1,9 +1,8 @@
-package com.falcon.movies.service;
+package com.falcon.movies.service.mapper;
 
 import com.falcon.movies.dto.AuthorDto;
 import com.falcon.movies.entity.Author;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface AuthorMapper extends EntityMapper<AuthorDto, Author> {

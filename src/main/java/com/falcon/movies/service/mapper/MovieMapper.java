@@ -1,7 +1,6 @@
-package com.falcon.movies.service;
+package com.falcon.movies.service.mapper;
 
 import com.falcon.movies.dto.MovieDto;
-import com.falcon.movies.entity.Author;
 import com.falcon.movies.entity.Movie;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
