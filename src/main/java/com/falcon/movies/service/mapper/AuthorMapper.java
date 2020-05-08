@@ -3,6 +3,7 @@ package com.falcon.movies.service.mapper;
 import com.falcon.movies.dto.AuthorDto;
 import com.falcon.movies.entity.Author;
 import org.mapstruct.Mapper;
+import org.springframework.data.domain.Slice;
 
 @Mapper(componentModel = "spring")
 public interface AuthorMapper extends EntityMapper<AuthorDto, Author> {
@@ -14,5 +15,13 @@ public interface AuthorMapper extends EntityMapper<AuthorDto, Author> {
         Author author = new Author();
         author.setId(id);
         return author;
+    }
+
+    default Slice<AuthorDto> toDto(Slice<Author> items) {
+        return items.map(this::toDto);
+    }
+
+    default Slice<Author> toEntity(Slice<AuthorDto> items) {
+        return items.map(this::toEntity);
     }
 }

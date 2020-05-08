@@ -1,30 +1,41 @@
-package com.falcon.movies.service;
+package com.falcon.movies.service.mapper;
 
 import com.falcon.movies.dto.MovieDto;
+import com.falcon.movies.entity.Author;
 import com.falcon.movies.entity.Movie;
-import com.falcon.movies.service.mapper.AuthorMapper;
-import com.falcon.movies.service.mapper.AuthorMapperImpl;
-import com.falcon.movies.service.mapper.MovieMapper;
-import com.falcon.movies.service.mapper.MovieMapperImpl;
+import com.falcon.movies.entity.enumeration.MovieType;
+import com.falcon.movies.repository.MovieRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
-class MovieMapperTest {
+@DataJpaTest
+@ActiveProfiles("test")
+@Transactional
+class MovieMapperTestIT {
 
     private final String MOVIE_TITLE = "TEST";
-
-    private Movie movie;
-    private MovieDto movieDto;
+    private final String AUTHOR_NAME = "TESTAUTHOR";
 
     private MovieMapper movieMapper;
 
+    private MovieDto movieDto;
+
+    @Autowired
+    private MovieRepository movieRepository;
 
     @BeforeEach
     void setUp() {
@@ -34,8 +45,14 @@ class MovieMapperTest {
     }
 
     private void setUpMovies() {
-        movie = new Movie();
+        Author author = new Author();
+        author.setName(AUTHOR_NAME);
+
+        Movie movie = new Movie();
         movie.setTitle(MOVIE_TITLE);
+        movie.setAuthor(author);
+        movie.setMovieType(MovieType.COMEDY);
+        movieRepository.save(movie);
 
         movieDto = new MovieDto();
         movieDto.setTitle(MOVIE_TITLE);
@@ -43,25 +60,20 @@ class MovieMapperTest {
     }
 
     @Test
-    public void testEntityFromId() {
-        Long id = 12L;
-        assertThat(movieMapper.fromId(id).getId()).isEqualTo(id);
-        assertThat(movieMapper.fromId(null)).isNull();
-    }
-
-    @Test
-    public void toDtoSlice() {
-        List<Movie> movies = new ArrayList<>();
-        movies.add(movie);
-
-        Slice<Movie> movieSlice = new SliceImpl<>(movies);
+    void toDtoSlice() {
+        Pageable pageable = PageRequest.of(0, 1);
+        Slice<Movie> movieSlice = movieRepository.findAll(pageable);
         Slice<MovieDto> movieDtoSlice = movieMapper.toDto(movieSlice);
 
         assertThat(movieSlice.getSize()).isEqualTo(1);
         assertThat(movieSlice.getContent().get(0).getTitle()).isEqualTo(MOVIE_TITLE);
+        assertThat(movieSlice.getContent().get(0).getAuthor().getName()).isEqualTo(AUTHOR_NAME);
+        assertThat(movieSlice.getContent().get(0).getMovieType()).isEqualTo(MovieType.COMEDY);
 
         assertThat(movieDtoSlice.getSize()).isEqualTo(1);
         assertThat(movieDtoSlice.getContent().get(0).getTitle()).isEqualTo(MOVIE_TITLE);
+        assertThat(movieDtoSlice.getContent().get(0).getAuthorName()).isEqualTo(AUTHOR_NAME);
+        assertThat(movieDtoSlice.getContent().get(0).getMovieType()).isEqualTo(MovieType.COMEDY);
     }
 
     @Test
