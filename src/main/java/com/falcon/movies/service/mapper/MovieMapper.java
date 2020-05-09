@@ -16,7 +16,8 @@ public interface MovieMapper extends EntityMapper<MovieDto, Movie> {
     MovieDto toDto(Movie entity);
 
     @Override
-    @Mapping(source = "authorId", target = "author")
+    @Mapping(source = "authorId", target = "author.id")
+    @Mapping(source = "authorName", target = "author.name")
     Movie toEntity(MovieDto movieDto);
 
     default Movie fromId(Long id) {
