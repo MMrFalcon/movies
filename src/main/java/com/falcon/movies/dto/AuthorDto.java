@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class AuthorDto {
 
-    private int id;
+    private Long id;
 
     private LocalDate creationDate;
 
@@ -14,11 +14,11 @@ public class AuthorDto {
 
     private LocalDate dateOfBirth;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

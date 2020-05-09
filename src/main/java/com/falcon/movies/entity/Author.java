@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class Author extends BaseEntity implements Serializable {
