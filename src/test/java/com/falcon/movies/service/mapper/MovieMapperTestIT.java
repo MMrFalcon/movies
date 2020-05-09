@@ -4,6 +4,7 @@ import com.falcon.movies.dto.MovieDto;
 import com.falcon.movies.entity.Author;
 import com.falcon.movies.entity.Movie;
 import com.falcon.movies.entity.enumeration.MovieType;
+import com.falcon.movies.repository.AuthorRepository;
 import com.falcon.movies.repository.MovieRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,17 +37,19 @@ class MovieMapperTestIT {
 
     @Autowired
     private MovieRepository movieRepository;
+    @Autowired
+    private AuthorRepository authorRepository;
 
     @BeforeEach
     void setUp() {
-        AuthorMapper authorMapper = new AuthorMapperImpl();
-        movieMapper = new MovieMapperImpl(authorMapper);
+        movieMapper = new MovieMapperImpl();
         setUpMovies();
     }
 
     private void setUpMovies() {
         Author author = new Author();
         author.setName(AUTHOR_NAME);
+        authorRepository.saveAndFlush(author);
 
         Movie movie = new Movie();
         movie.setTitle(MOVIE_TITLE);

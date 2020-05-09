@@ -2,8 +2,6 @@ package com.falcon.movies.service;
 
 import com.falcon.movies.dto.MovieDto;
 import com.falcon.movies.entity.Movie;
-import com.falcon.movies.service.mapper.AuthorMapper;
-import com.falcon.movies.service.mapper.AuthorMapperImpl;
 import com.falcon.movies.service.mapper.MovieMapper;
 import com.falcon.movies.service.mapper.MovieMapperImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,8 +26,7 @@ class MovieMapperTest {
 
     @BeforeEach
     void setUp() {
-        AuthorMapper authorMapper = new AuthorMapperImpl();
-        movieMapper = new MovieMapperImpl(authorMapper);
+        movieMapper = new MovieMapperImpl();
         setUpMovies();
     }
 
