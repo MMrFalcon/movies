@@ -1,8 +1,10 @@
-# Java Maven CircleCI 2.0 configuration file
+# Java Maven CircleCI 2.1 configuration file
 #
-# Check https://circleci.com/docs/2.0/language-java/ for more details
+# Check https://circleci.com/docs/2.1/language-java/ for more details
 #
-version: 2
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.2
 jobs:
   build:
     docker:
@@ -42,3 +44,12 @@ jobs:
       #- run: mvn integration-test
       # run all tests
       - run: mvn verify
+
+      - store_artifacts:
+          path:  target
+
+      # upload report to code cov (xml is supported)
+      # https://github.com/codecov/example-java
+      - codecov/upload:
+          file: target/my-reports/jacoco.xml
+          token: 0e20cd12-4df6-4d58-a62d-ae5ee371c099
