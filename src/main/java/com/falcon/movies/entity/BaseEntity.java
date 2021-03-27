@@ -65,4 +65,13 @@ public class BaseEntity implements Serializable {
     public int hashCode() {
         return Objects.hash(id, creationDate, updateDate);
     }
+
+    @Override
+    public String toString() {
+        return "BaseEntity{" +
+                "id=" + id +
+                ", creationDate=" + creationDate +
+                ", updateDate=" + updateDate +
+                '}';
+    }
 }

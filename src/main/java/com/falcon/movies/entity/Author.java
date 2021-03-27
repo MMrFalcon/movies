@@ -47,4 +47,13 @@ public class Author extends BaseEntity implements Serializable {
     public int hashCode() {
         return Objects.hash(super.hashCode(), name, dateOfBirth);
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " +
+                "Author{" +
+                "name='" + name + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                '}';
+    }
 }

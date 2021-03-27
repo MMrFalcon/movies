@@ -1,7 +1,9 @@
 package com.falcon.movies.service.mapper;
 
 import com.falcon.movies.dto.AuthorDto;
+import com.falcon.movies.dto.MovieDto;
 import com.falcon.movies.entity.Author;
+import com.falcon.movies.entity.Movie;
 import com.falcon.movies.repository.AuthorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +34,8 @@ class AuthorMapperTestIT {
 
     private AuthorMapper authorMapper;
 
+    private AuthorDto authorDto;
+
     @Autowired
     private AuthorRepository authorRepository;
 
@@ -45,6 +49,10 @@ class AuthorMapperTestIT {
         Author author = new Author();
         author.setName(AUTHOR_NAME);
         authorRepository.save(author);
+
+        authorDto = new AuthorDto();
+        authorDto.setId(123L);
+        authorDto.setName(AUTHOR_NAME);
     }
 
     @Test
@@ -52,6 +60,21 @@ class AuthorMapperTestIT {
         Pageable pageable = PageRequest.of(0, 1);
         Slice<Author> authorSlice = authorRepository.findAll(pageable);
         Slice<AuthorDto> authorDtoSlice = authorMapper.toDto(authorSlice);
+
+        assertThat(authorSlice.getSize()).isEqualTo(1);
+        assertThat(authorSlice.getContent().get(0).getName()).isEqualTo(AUTHOR_NAME);
+
+        assertThat(authorDtoSlice.getSize()).isEqualTo(1);
+        assertThat(authorDtoSlice.getContent().get(0).getName()).isEqualTo(AUTHOR_NAME);
+    }
+
+    @Test
+    public void toEntitySlice() {
+        List<AuthorDto> authors = new ArrayList<>();
+        authors.add(authorDto);
+
+        Slice<AuthorDto> authorDtoSlice = new SliceImpl<>(authors);
+        Slice<Author> authorSlice = authorMapper.toEntity(authorDtoSlice);
 
         assertThat(authorSlice.getSize()).isEqualTo(1);
         assertThat(authorSlice.getContent().get(0).getName()).isEqualTo(AUTHOR_NAME);
