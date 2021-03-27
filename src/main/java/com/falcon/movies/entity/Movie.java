@@ -86,4 +86,17 @@ public class Movie extends BaseEntity implements Serializable {
     public int hashCode() {
         return Objects.hash(super.hashCode(), title, time, productionDate, movieType, author);
     }
+
+
+    @Override
+    public String toString() {
+        return super.toString() + " " +
+                "Movie{" +
+                "title='" + title + '\'' +
+                ", time=" + time +
+                ", productionDate=" + productionDate +
+                ", movieType=" + movieType +
+                ", author=" + author +
+                '}';
+    }
 }
