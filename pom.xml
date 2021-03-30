@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
+		<org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
 		<maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
 	</properties>
 
@@ -29,6 +29,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+<!-- Reload on build -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-devtools</artifactId>
+				<optional>true</optional>
+			</dependency>
 
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -85,7 +92,7 @@
 				</configuration>
 			</plugin>
 
-<!--			Code Cov plugin
+<!--	******** Code Cov plugin
 		Running mvn test will include a code coverage report (an exec)
 		file that is also converted to an html page,
 		like many other coverage tools. The Pom file above writes to the target directory,
@@ -130,6 +137,22 @@
 <!--					<systemPropertyVariables>-->
 <!--						<jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>-->
 <!--					</systemPropertyVariables>-->
+				</configuration>
+			</plugin>
+
+<!--			Generate JPA Criteria Metamodel *** CLEAN - PACKAGE if not working ***-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<annotationProcessorPaths>
+						<annotationProcessorPath>
+							<groupId>org.hibernate</groupId>
+							<artifactId>hibernate-jpamodelgen</artifactId>
+							<version>${hibernate.version}</version>
+						</annotationProcessorPath>
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 

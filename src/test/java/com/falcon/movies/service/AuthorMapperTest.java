@@ -6,10 +6,7 @@ import com.falcon.movies.service.mapper.AuthorMapper;
 import com.falcon.movies.service.mapper.AuthorMapperImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.SliceImpl;
+import org.springframework.data.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +70,36 @@ class AuthorMapperTest {
 
         assertThat(authorDtoSlice.getSize()).isEqualTo(1);
         assertThat(authorDtoSlice.getContent().get(0).getName()).isEqualTo(AUTHOR_NAME);
+    }
+
+    @Test
+    public void toDtoPage() {
+        List<Author> authors = new ArrayList<>();
+        authors.add(author);
+
+        Page<Author> authorPage = new PageImpl<>(authors);
+        Page<AuthorDto> authorDtoPage = authorMapper.toDto(authorPage);
+
+        assertThat(authorPage.getSize()).isEqualTo(1);
+        assertThat(authorPage.getContent().get(0).getName()).isEqualTo(AUTHOR_NAME);
+
+        assertThat(authorDtoPage.getSize()).isEqualTo(1);
+        assertThat(authorDtoPage.getContent().get(0).getName()).isEqualTo(AUTHOR_NAME);
+    }
+
+    @Test
+    public void toEntityPage() {
+        List<AuthorDto> authors = new ArrayList<>();
+        authors.add(authorDto);
+
+        Page<AuthorDto> authorDtoPage = new PageImpl<>(authors);
+        Page<Author> authorPage = authorMapper.toEntity(authorDtoPage);
+
+        assertThat(authorPage.getSize()).isEqualTo(1);
+        assertThat(authorPage.getContent().get(0).getName()).isEqualTo(AUTHOR_NAME);
+
+        assertThat(authorDtoPage.getSize()).isEqualTo(1);
+        assertThat(authorDtoPage.getContent().get(0).getName()).isEqualTo(AUTHOR_NAME);
     }
 
 }

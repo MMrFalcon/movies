@@ -8,15 +8,18 @@ import com.falcon.movies.repository.MovieRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 /**
- * Load data on application startup if database is empty
+ * Load data on application startup if database is empty.
+ * Skip when tests profile is active.
  */
 @Component
+@Profile({"!test"})
 public class DataInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
     private final Logger log = LoggerFactory.getLogger(DataInitializer.class);

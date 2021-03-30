@@ -6,6 +6,8 @@ import com.falcon.movies.service.mapper.MovieMapper;
 import com.falcon.movies.service.mapper.MovieMapperImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 
@@ -74,5 +76,35 @@ class MovieMapperTest {
 
         assertThat(movieDtoSlice.getSize()).isEqualTo(1);
         assertThat(movieDtoSlice.getContent().get(0).getTitle()).isEqualTo(MOVIE_TITLE);
+    }
+
+    @Test
+    public void toDtoPage() {
+        List<Movie> movies = new ArrayList<>();
+        movies.add(movie);
+
+        Page<Movie> moviePage = new PageImpl<>(movies);
+        Page<MovieDto> movieDtoPage  = movieMapper.toDto(moviePage);
+
+        assertThat(moviePage.getSize()).isEqualTo(1);
+        assertThat(moviePage.getContent().get(0).getTitle()).isEqualTo(MOVIE_TITLE);
+
+        assertThat(movieDtoPage.getSize()).isEqualTo(1);
+        assertThat(movieDtoPage.getContent().get(0).getTitle()).isEqualTo(MOVIE_TITLE);
+    }
+
+    @Test
+    public void toEntityPage() {
+        List<MovieDto> movies = new ArrayList<>();
+        movies.add(movieDto);
+
+        Page<MovieDto> movieDtoPage = new PageImpl<>(movies);
+        Page<Movie> moviePage = movieMapper.toEntity(movieDtoPage );
+
+        assertThat(moviePage.getSize()).isEqualTo(1);
+        assertThat(moviePage.getContent().get(0).getTitle()).isEqualTo(MOVIE_TITLE);
+
+        assertThat(movieDtoPage.getSize()).isEqualTo(1);
+        assertThat(movieDtoPage.getContent().get(0).getTitle()).isEqualTo(MOVIE_TITLE);
     }
 }
