@@ -5,6 +5,7 @@ import com.falcon.movies.entity.Movie;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 
 @Mapper(componentModel = "spring", uses = {AuthorMapper.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
@@ -34,6 +35,14 @@ public interface MovieMapper extends EntityMapper<MovieDto, Movie> {
     }
 
     default Slice<Movie> toEntity(Slice<MovieDto> items) {
+        return items.map(this::toEntity);
+    }
+
+    default Page<MovieDto> toDto(Page<Movie> items) {
+        return items.map(this::toDto);
+    }
+
+    default Page<Movie> toEntity(Page<MovieDto> items) {
         return items.map(this::toEntity);
     }
 }
