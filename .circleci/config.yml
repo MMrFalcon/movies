@@ -43,7 +43,7 @@ jobs:
       # only integration tests
       #- run: mvn integration-test
       # run all tests
-      - run: mvn verify
+      - run: mvn verify -Pfailsafe
 
       - store_artifacts:
           path:  target

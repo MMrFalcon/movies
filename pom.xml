@@ -18,6 +18,7 @@
 		<java.version>11</java.version>
 		<org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
 		<maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+		<filesafe.version>2.22.2</filesafe.version>
 	</properties>
 
 	<dependencies>
@@ -65,7 +66,37 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${org.mapstruct.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-failsafe-plugin</artifactId>
+			<version>${filesafe.version}</version>
+		</dependency>
 	</dependencies>
+
+	<profiles>
+
+<!--		Profile for running integration tests -->
+		<profile>
+			<id>failsafe</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>${filesafe.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<build>
 		<plugins>
@@ -153,6 +184,16 @@
 							<version>${hibernate.version}</version>
 						</annotationProcessorPath>
 					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${filesafe.version}</version>
+				<configuration>
+					<includes>
+						<include>**/*IT</include>
+					</includes>
 				</configuration>
 			</plugin>
 
