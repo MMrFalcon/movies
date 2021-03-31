@@ -86,6 +86,25 @@ class AuthorControllerTestIT {
         authorsShouldNotBeFound("dateOfBirthLessThanOrEqual=" + BIRTH_DATE.minusDays(1));
     }
 
+    @Test
+    @Transactional
+    void getByIdWhenEntityExists() throws Exception {
+        mockMvc.perform(get("/api/authors/" + author.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(author.getId().intValue()))
+                .andExpect(jsonPath("$.name").value(AUTHOR_NAME))
+                .andExpect(jsonPath("$.dateOfBirth").value(author.getDateOfBirth().toString()));
+    }
+
+    @Test
+    @Transactional
+    void getByIdWhenEntityDoesNotExists() throws Exception {
+        mockMvc.perform(get("/api/authors/" + 123))
+                .andExpect(status().isNotFound());
+    }
+
+
     private void authorsShouldBeFound(String filter) throws Exception {
         mockMvc.perform(get("/api/authors?" + filter))
                 .andExpect(status().isOk())
