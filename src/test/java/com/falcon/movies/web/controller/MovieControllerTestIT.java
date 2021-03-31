@@ -135,6 +135,26 @@ class MovieControllerTestIT {
     }
 
 
+    @Test
+    @Transactional
+    void getByIdWhenEntityExists() throws Exception {
+        mockMvc.perform(get("/api/movies/" + movie.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(movie.getId().intValue()))
+                .andExpect(jsonPath("$.title").value(MOVIE_TITLE))
+                .andExpect(jsonPath("$.productionDate").value(MOVIE_PRODUCTION_DATE.toString()))
+                .andExpect(jsonPath("$.time").value(MOVIE_TIME))
+                .andExpect(jsonPath("$.authorId").value(author.getId().intValue()))
+                .andExpect(jsonPath("$.authorName").value(author.getName()));
+    }
+
+    @Test
+    @Transactional
+    void getByIdWhenEntityDoesNotExists() throws Exception {
+        mockMvc.perform(get("/api/movies/" + 123))
+                .andExpect(status().isNotFound());
+    }
 
     private void moviesShouldBeFound(String filter) throws Exception {
         mockMvc.perform(get("/api/movies?" + filter))

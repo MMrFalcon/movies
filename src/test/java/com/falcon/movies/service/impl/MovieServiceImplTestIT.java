@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -170,12 +171,12 @@ class MovieServiceImplTestIT {
     @Test
     void getById() {
 
-        MovieDto movieDto = movieService.getById(firstMovie.getId());
-        MovieDto movieDto2 = movieService.getById(secondMovie.getId());
+        Optional<MovieDto> movieDto = movieService.getById(firstMovie.getId());
+        Optional<MovieDto> movieDto2 = movieService.getById(secondMovie.getId());
 
-        assertThat(movieDto.getMovieType()).isEqualTo(MOVIES_TYPE);
-        assertThat(movieDto2.getMovieType()).isEqualTo(MOVIES_TYPE);
-        assertThat(movieDto.getTitle()).isEqualTo(MOVIE_TITLE);
-        assertThat(movieDto2.getTitle()).isEqualTo(SECOND_MOVIE_TITLE);
+        assertThat(movieDto.get().getMovieType()).isEqualTo(MOVIES_TYPE);
+        assertThat(movieDto2.get().getMovieType()).isEqualTo(MOVIES_TYPE);
+        assertThat(movieDto.get().getTitle()).isEqualTo(MOVIE_TITLE);
+        assertThat(movieDto2.get().getTitle()).isEqualTo(SECOND_MOVIE_TITLE);
     }
 }

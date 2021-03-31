@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -143,8 +144,8 @@ class AuthorServiceImplTestIT {
 
         Author savedAuthor = authorRepository.save(author);
 
-        AuthorDto foundAuthor = authorService.getById(savedAuthor.getId());
+        Optional<AuthorDto> foundAuthor = authorService.getById(savedAuthor.getId());
 
-        assertThat(foundAuthor.getName()).isEqualTo(newAuthorName);
+        assertThat(foundAuthor.get().getName()).isEqualTo(newAuthorName);
     }
 }

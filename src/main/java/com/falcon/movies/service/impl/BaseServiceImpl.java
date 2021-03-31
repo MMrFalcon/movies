@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public abstract class BaseServiceImpl<E extends BaseEntity, R extends BaseRepository<E>, D,  M extends EntityMapper<D, E>>
@@ -61,8 +62,8 @@ public abstract class BaseServiceImpl<E extends BaseEntity, R extends BaseReposi
     }
 
     @Override
-    public D getById(Long id) {
+    public Optional<D> getById(Long id) {
         log.debug("Request to get entity by id {}", id);
-        return mapper.toDto(repository.getOne(id));
+        return repository.findById(id).map(mapper::toDto);
     }
 }

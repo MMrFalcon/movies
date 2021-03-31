@@ -4,6 +4,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BaseService<D> {
 
@@ -17,5 +18,5 @@ public interface BaseService<D> {
 
     Slice<D> getAll(Pageable pageable);
 
-    D getById(Long id);
+    Optional<D> getById(Long id);
 }
