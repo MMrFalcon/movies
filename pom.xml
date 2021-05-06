@@ -18,7 +18,7 @@
         <java.version>11</java.version>
         <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
-        <filesafe.version>2.22.2</filesafe.version>
+        <failsafe.version>2.22.2</failsafe.version>
     </properties>
 
     <dependencies>
@@ -70,7 +70,7 @@
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
-            <version>${filesafe.version}</version>
+            <version>${failsafe.version}</version>
         </dependency>
     </dependencies>
 
@@ -83,7 +83,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>${filesafe.version}</version>
+                        <version>${failsafe.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -118,9 +118,14 @@
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${org.mapstruct.version}</version>
                         </path>
-
+                        <annotationProcessorPath>
+                            <groupId>org.hibernate</groupId>
+                            <artifactId>hibernate-jpamodelgen</artifactId>
+                            <version>${hibernate.version}</version>
+                        </annotationProcessorPath>
                     </annotationProcessorPaths>
                 </configuration>
+
             </plugin>
 
             <!--	******** Code Cov plugin
@@ -131,97 +136,70 @@
 
                     Use mvn verify or mvn test to generate report and save into /target/my-reports/
             -->
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.3</version>
-                <executions>
-
-                    <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                        <configuration>
-                            <destFile>target/jacoco.exec</destFile>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>prepare-agent-integration</id>
-                        <goals>
-                            <goal>prepare-agent-integration</goal>
-                        </goals>
-                        <configuration>
-                            <destFile>target/jacoco-integration.exec</destFile>
-                            <append>true</append>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>report</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>merge</goal>
-                            <goal>report</goal>
-                        </goals>
-                        <configuration>
-                            <!-- merge config -->
-                            <destFile>target/jacoco.exec</destFile>
-                            <fileSets>
-                                <fileSet>
-                                    <directory>target</directory>
-                                    <includes>
-                                        <include>*.exec</include>
-                                    </includes>
-                                </fileSet>
-                            </fileSets>
-                            <!-- report config -->
-                            <dataFile>target/jacoco.exec</dataFile>
-                        </configuration>
-                    </execution>
-
-                    <!-- CREATE REPORT FROM COMBINED UNIT AND INTEGRATION TESTS -->
-                    <execution>
-                        <id>post-unit-test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <configuration>
-                            <!-- Sets the path to the file which contains the execution data. -->
-                            <dataFile>target/jacoco.exec</dataFile>
-                            <!-- Sets the output directory for the code coverage report. -->
-                            <outputDirectory>target/my-reports</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!--			Generate JPA Criteria Metamodel *** CLEAN - PACKAGE if not working ***-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <annotationProcessorPaths>
-                        <annotationProcessorPath>
-                            <groupId>org.hibernate</groupId>
-                            <artifactId>hibernate-jpamodelgen</artifactId>
-                            <version>${hibernate.version}</version>
-                        </annotationProcessorPath>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
+            <!--Run integration tests-->
 
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${filesafe.version}</version>
+                <version>${failsafe.version}</version>
                 <configuration>
                     <includes>
                         <include>**/*IT</include>
                     </includes>
                 </configuration>
+            </plugin>
+
+            <!-- Create tests report -->
+            <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.3</version>
+            <executions>
+
+            <execution>
+                <id>prepare-agent-unit-tests</id>
+                <goals>
+                    <goal>prepare-agent</goal>
+                </goals>
+                <configuration>
+                    <destFile>target/jacoco-unit.exec</destFile>
+                </configuration>
+            </execution>
+
+            <execution>
+                <id>prepare-agent-integration-tests</id>
+                <goals>
+                    <goal>prepare-agent-integration</goal>
+                </goals>
+                <configuration>
+                    <destFile>target/jacoco-integration.exec</destFile>
+                    <append>true</append>
+                </configuration>
+            </execution>
+
+            <execution>
+                <id>report</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                    <goal>merge</goal>
+                    <goal>report</goal>
+                </goals>
+                <configuration>
+                    <!-- merge goal config -->
+                    <destFile>target/jacoco-merge.exec</destFile>
+                    <fileSets>
+                        <fileSet>
+                            <directory>target</directory>
+                            <includes>
+                                <include>*.exec</include>
+                            </includes>
+                        </fileSet>
+                    </fileSets>
+                    <!-- report goal config -->
+                    <dataFile>target/jacoco-merge.exec</dataFile>
+                    <outputDirectory>target/my-reports</outputDirectory>
+                </configuration>
+            </execution>
+            </executions>
             </plugin>
 
         </plugins>
