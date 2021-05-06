@@ -19,6 +19,7 @@
         <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
         <failsafe.version>2.22.2</failsafe.version>
+
     </properties>
 
     <dependencies>
@@ -125,7 +126,6 @@
                         </annotationProcessorPath>
                     </annotationProcessorPaths>
                 </configuration>
-
             </plugin>
 
             <!--	******** Code Cov plugin
