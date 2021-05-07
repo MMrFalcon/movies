@@ -6,6 +6,7 @@ import com.falcon.movies.service.MovieService;
 import com.falcon.movies.service.criteria.AuthorCriteria;
 import com.falcon.movies.service.criteria.MovieCriteria;
 import com.falcon.movies.service.query.MovieQueryService;
+import com.falcon.movies.web.controller.header.CustomHeaderBuilderImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -43,7 +44,9 @@ public class MovieController {
     public ResponseEntity<List<MovieDto>> getByCriteria(MovieCriteria movieCriteria, Pageable pageable) {
         log.debug("Rest request for get Movies by criteria : {} ", movieCriteria);
         Page<MovieDto> moviesPage = movieQueryService.findByCriteria(movieCriteria, pageable);
-        HttpHeaders headers = ResponseHeaderGenerator.createGetResponseHeaders(moviesPage);
+        HttpHeaders headers = new CustomHeaderBuilderImpl()
+                .setGetMultipleHeader(pageable.getPageNumber(), pageable.getPageSize())
+                .setResponseStatus(200).build().getHttpHeaders();
         return ResponseEntity.ok().headers(headers).body(moviesPage.getContent());
     }
 
@@ -51,7 +54,9 @@ public class MovieController {
     public ResponseEntity<MovieDto> getById(@PathVariable Long id) {
         log.debug("Request for get MovieDto by id : {}", id);
         Optional<MovieDto> movieDto = movieService.getById(id);
-        return movieDto.map(dto -> ResponseEntity.ok().body(dto))
+        HttpHeaders headers = new CustomHeaderBuilderImpl()
+                .setGetOneHeader().setResponseStatus(200).build().getHttpHeaders();
+        return movieDto.map(dto -> ResponseEntity.ok().headers(headers).body(dto))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
