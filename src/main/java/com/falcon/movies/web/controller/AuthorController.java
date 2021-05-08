@@ -74,7 +74,8 @@ public class AuthorController {
         }
         AuthorDto savedAuthor = authorService.save(authorDto);
         CustomHeader customHeader = new CustomHeaderBuilderImpl().setCreateOrUpdateHeader(1).build();
-        return ResponseEntity.created(new URI(customHeader.getReferenceURI())).headers(customHeader.getHttpHeaders()).body(savedAuthor);
+        return ResponseEntity.created(new URI(customHeader.getReferenceURI())).headers(customHeader.getHttpHeaders())
+                .body(savedAuthor);
     }
 
     @PutMapping("/authors")

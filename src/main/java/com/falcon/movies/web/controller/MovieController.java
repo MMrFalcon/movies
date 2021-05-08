@@ -2,10 +2,12 @@ package com.falcon.movies.web.controller;
 
 import com.falcon.movies.dto.AuthorDto;
 import com.falcon.movies.dto.MovieDto;
+import com.falcon.movies.entity.Movie;
 import com.falcon.movies.service.MovieService;
 import com.falcon.movies.service.criteria.AuthorCriteria;
 import com.falcon.movies.service.criteria.MovieCriteria;
 import com.falcon.movies.service.query.MovieQueryService;
+import com.falcon.movies.web.controller.header.CustomHeader;
 import com.falcon.movies.web.controller.header.CustomHeaderBuilderImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,14 +16,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +60,18 @@ public class MovieController {
                 .setGetOneHeader().setResponseStatus(200).build().getHttpHeaders();
         return movieDto.map(dto -> ResponseEntity.ok().headers(headers).body(dto))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/movies")
+    public ResponseEntity<MovieDto> createMovie(@Valid @RequestBody MovieDto movieDto) throws URISyntaxException {
+        log.debug("Request for save new movie : {}", movieDto);
+        if (movieDto.getId() != null) {
+            throw new RuntimeException("Id already exists");
+        }
+        MovieDto savedMovie = movieService.save(movieDto);
+        CustomHeader customHeader = new CustomHeaderBuilderImpl().setCreateOrUpdateHeader(1).build();
+        return ResponseEntity.created(new URI(customHeader.getReferenceURI())).headers(customHeader.getHttpHeaders())
+                .body(savedMovie);
     }
 
 }

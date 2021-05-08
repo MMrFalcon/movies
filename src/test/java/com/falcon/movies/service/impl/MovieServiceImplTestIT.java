@@ -9,6 +9,7 @@ import com.falcon.movies.repository.MovieRepository;
 import com.falcon.movies.service.MovieService;
 import com.falcon.movies.service.mapper.MovieMapper;
 import com.falcon.movies.service.mapper.MovieMapperImpl;
+import com.falcon.movies.service.observers.notifications.NewMoviesListener;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ class MovieServiceImplTestIT {
 
     @Autowired
     private MovieRepository movieRepository;
+    @Autowired
+    private NewMoviesListener newMoviesListener;
+
     private MovieMapper movieMapper;
 
     private Author author;
@@ -52,7 +56,7 @@ class MovieServiceImplTestIT {
     void setUp() {
         movieMapper = new MovieMapperImpl();
 
-        movieService = new MovieServiceImpl(movieRepository, movieMapper);
+        movieService = new MovieServiceImpl(movieRepository, movieMapper, newMoviesListener);
 
         setUpMovies();
     }
