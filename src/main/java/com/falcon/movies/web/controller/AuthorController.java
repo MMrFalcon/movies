@@ -58,6 +58,14 @@ public class AuthorController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/authors/{id}/movies/count")
+    public ResponseEntity<Integer> getAuthorMovieCount(@PathVariable Long id) {
+        log.debug("Request for get movies count for author with id: {}", id);
+        Integer moviesCount = authorService.getMoviesCount(id);
+        HttpHeaders headers = new CustomHeaderBuilderImpl().setGetOneHeader().build().getHttpHeaders();
+        return ResponseEntity.ok().headers(headers).body(moviesCount);
+    }
+
     @PostMapping("/authors")
     public ResponseEntity<AuthorDto> createAuthor(@Valid @RequestBody AuthorDto authorDto) throws URISyntaxException {
         log.debug("Request for create author : {}",  authorDto);

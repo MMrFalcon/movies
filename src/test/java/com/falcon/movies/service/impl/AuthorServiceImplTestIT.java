@@ -3,6 +3,7 @@ package com.falcon.movies.service.impl;
 import com.falcon.movies.dto.AuthorDto;
 import com.falcon.movies.entity.Author;
 import com.falcon.movies.repository.AuthorRepository;
+import com.falcon.movies.repository.MovieRepository;
 import com.falcon.movies.service.AuthorService;
 import com.falcon.movies.service.mapper.AuthorMapper;
 import com.falcon.movies.service.mapper.AuthorMapperImpl;
@@ -33,6 +34,9 @@ class AuthorServiceImplTestIT {
 
     @Autowired
     private AuthorRepository authorRepository;
+    @Autowired
+    private MovieRepository movieRepository;
+
     private AuthorMapper authorMapper;
 
     private AuthorService authorService;
@@ -40,7 +44,7 @@ class AuthorServiceImplTestIT {
     @BeforeEach
     void setUp() {
         authorMapper = new AuthorMapperImpl();
-        authorService = new AuthorServiceImpl(authorRepository, authorMapper);
+        authorService = new AuthorServiceImpl(authorRepository, authorMapper, movieRepository);
 
         setUpAuthors();
     }

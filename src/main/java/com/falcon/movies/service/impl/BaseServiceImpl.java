@@ -66,4 +66,12 @@ public abstract class BaseServiceImpl<E extends BaseEntity, R extends BaseReposi
         log.debug("Request to get entity by id {}", id);
         return repository.findById(id).map(mapper::toDto);
     }
+
+    public R getRepository() {
+        return repository;
+    }
+
+    public M getMapper() {
+        return mapper;
+    }
 }
