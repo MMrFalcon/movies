@@ -57,9 +57,8 @@ class MovieMapperTestIT {
         movie.setMovieType(MovieType.COMEDY);
         movieRepository.save(movie);
 
-        movieDto = new MovieDto();
-        movieDto.setTitle(MOVIE_TITLE);
-        movieDto.setAuthorId(1L);
+        movieDto = MovieDto.builder(MOVIE_TITLE)
+                .setAuthorId(1L).build();
     }
 
     @Test
@@ -81,8 +80,7 @@ class MovieMapperTestIT {
 
     @Test
     public void toEntitySlice() {
-        List<MovieDto> movies = new ArrayList<>();
-        movies.add(movieDto);
+        List<MovieDto> movies = List.of(movieDto);
 
         Slice<MovieDto> movieDtoSlice = new SliceImpl<>(movies);
         Slice<Movie> movieSlice = movieMapper.toEntity(movieDtoSlice);

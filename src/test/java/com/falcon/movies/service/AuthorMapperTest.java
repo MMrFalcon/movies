@@ -31,8 +31,7 @@ class AuthorMapperTest {
         author = new Author();
         author.setName(AUTHOR_NAME);
 
-        authorDto = new AuthorDto();
-        authorDto.setName(AUTHOR_NAME);
+        authorDto = AuthorDto.builder(AUTHOR_NAME).build();
     }
 
     @Test
@@ -44,8 +43,7 @@ class AuthorMapperTest {
 
     @Test
     public void toDtoSlice() {
-        List<Author> authors = new ArrayList<>();
-        authors.add(author);
+        List<Author> authors = List.of(author);
 
         Slice<Author> authorSlice = new SliceImpl<>(authors);
         Slice<AuthorDto> authorDtoSlice = authorMapper.toDto(authorSlice);
@@ -59,8 +57,7 @@ class AuthorMapperTest {
 
     @Test
     public void toEntitySlice() {
-        List<AuthorDto> authors = new ArrayList<>();
-        authors.add(authorDto);
+        List<AuthorDto> authors = List.of(authorDto);
 
         Slice<AuthorDto> authorDtoSlice = new SliceImpl<>(authors);
         Slice<Author> authorSlice = authorMapper.toEntity(authorDtoSlice);
@@ -74,8 +71,7 @@ class AuthorMapperTest {
 
     @Test
     public void toDtoPage() {
-        List<Author> authors = new ArrayList<>();
-        authors.add(author);
+        List<Author> authors = List.of(author);
 
         Page<Author> authorPage = new PageImpl<>(authors);
         Page<AuthorDto> authorDtoPage = authorMapper.toDto(authorPage);
@@ -89,8 +85,7 @@ class AuthorMapperTest {
 
     @Test
     public void toEntityPage() {
-        List<AuthorDto> authors = new ArrayList<>();
-        authors.add(authorDto);
+        List<AuthorDto> authors = List.of(authorDto);
 
         Page<AuthorDto> authorDtoPage = new PageImpl<>(authors);
         Page<Author> authorPage = authorMapper.toEntity(authorDtoPage);

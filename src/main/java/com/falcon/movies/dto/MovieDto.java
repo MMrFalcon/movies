@@ -3,97 +3,171 @@ package com.falcon.movies.dto;
 import com.falcon.movies.entity.enumeration.MovieType;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class MovieDto {
 
-    private Long id;
+    private final Long id;
 
-    private String title;
+    private final String title;
 
-    private int time;
+    private final int time;
 
-    private LocalDate productionDate;
+    private final LocalDate productionDate;
 
-    private MovieType movieType;
+    private final MovieType movieType;
 
-    private Long authorId;
+    private final Long authorId;
 
-    private String authorName;
+    private final String authorName;
 
-    private LocalDate creationDate;
+    private final LocalDate creationDate;
 
-    private LocalDate updateDate;
+    private final LocalDate updateDate;
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public int getTime() {
         return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
     }
 
     public LocalDate getProductionDate() {
         return productionDate;
     }
 
-    public void setProductionDate(LocalDate productionDate) {
-        this.productionDate = productionDate;
-    }
-
     public MovieType getMovieType() {
         return movieType;
-    }
-
-    public void setMovieType(MovieType movieType) {
-        this.movieType = movieType;
     }
 
     public Long getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
-    }
-
     public String getAuthorName() {
         return authorName;
-    }
-
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
     }
 
     public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
-    }
-
     public LocalDate getUpdateDate() {
         return updateDate;
     }
 
-    public void setUpdateDate(LocalDate updateDate) {
-        this.updateDate = updateDate;
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static Builder builder(String title) {
+        return new Builder(title);
+    }
+
+    public static class Builder {
+        private Long id;
+
+        private String title;
+
+        private int time;
+
+        private LocalDate productionDate;
+
+        private MovieType movieType;
+
+        private Long authorId;
+
+        private String authorName;
+
+        private LocalDate creationDate;
+
+        private LocalDate updateDate;
+
+        public Builder(String title) {
+            this.title = title;
+        }
+
+        public Builder() {
+        }
+
+        public Builder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder setTime(int time) {
+            this.time = time;
+            return this;
+        }
+
+        public Builder setProductionDate(LocalDate productionDate) {
+            this.productionDate = productionDate;
+            return this;
+        }
+
+        public Builder setMovieType(MovieType movieType) {
+            this.movieType = movieType;
+            return this;
+        }
+
+        public Builder setAuthorId(Long authorId) {
+            this.authorId = authorId;
+            return this;
+        }
+
+        public Builder setAuthorName(String authorName) {
+            this.authorName = authorName;
+            return this;
+        }
+
+        public Builder setCreationDate(LocalDate creationDate) {
+            this.creationDate = creationDate;
+            return this;
+        }
+
+        public Builder setUpdateDate(LocalDate updateDate) {
+            this.updateDate = updateDate;
+            return this;
+        }
+
+        public MovieDto build() {
+            return new MovieDto(this);
+        }
+    }
+
+    private MovieDto(Builder builder) {
+        this.id = builder.id;
+        this.title = builder.title;
+        this.time = builder.time;
+        this.productionDate = builder.productionDate;
+        this.movieType = builder.movieType;
+        this.authorId = builder.authorId;
+        this.authorName = builder.authorName;
+        this.creationDate = builder.creationDate;
+        this.updateDate = builder.updateDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MovieDto movieDto = (MovieDto) o;
+        return time == movieDto.time && Objects.equals(id, movieDto.id) && Objects.equals(title, movieDto.title) && Objects.equals(productionDate, movieDto.productionDate) && movieType == movieDto.movieType && Objects.equals(authorId, movieDto.authorId) && Objects.equals(authorName, movieDto.authorName) && Objects.equals(creationDate, movieDto.creationDate) && Objects.equals(updateDate, movieDto.updateDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, time, productionDate, movieType, authorId, authorName, creationDate, updateDate);
     }
 
     @Override
