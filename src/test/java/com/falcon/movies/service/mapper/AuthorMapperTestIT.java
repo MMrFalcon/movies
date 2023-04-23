@@ -50,9 +50,7 @@ class AuthorMapperTestIT {
         author.setName(AUTHOR_NAME);
         authorRepository.save(author);
 
-        authorDto = new AuthorDto();
-        authorDto.setId(123L);
-        authorDto.setName(AUTHOR_NAME);
+        authorDto = new AuthorDto.Builder(AUTHOR_NAME).setId(123L).build();
     }
 
     @Test
@@ -70,8 +68,7 @@ class AuthorMapperTestIT {
 
     @Test
     public void toEntitySlice() {
-        List<AuthorDto> authors = new ArrayList<>();
-        authors.add(authorDto);
+        List<AuthorDto> authors = List.of(authorDto);
 
         Slice<AuthorDto> authorDtoSlice = new SliceImpl<>(authors);
         Slice<Author> authorSlice = authorMapper.toEntity(authorDtoSlice);

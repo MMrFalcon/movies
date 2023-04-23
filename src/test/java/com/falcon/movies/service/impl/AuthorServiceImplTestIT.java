@@ -61,11 +61,11 @@ class AuthorServiceImplTestIT {
         final String secondNewAuthorName = "IM NEW 2";
         List<AuthorDto> authors = new ArrayList<>();
 
-        AuthorDto author = new AuthorDto();
-        author.setName(firstNewAuthorName);
+        AuthorDto author = new AuthorDto.Builder(firstNewAuthorName).build();
+//        author.setName(firstNewAuthorName);
 
-        AuthorDto author2 = new AuthorDto();
-        author2.setName(secondNewAuthorName);
+        AuthorDto author2 = new AuthorDto.Builder(secondNewAuthorName).build();
+//        author2.setName(secondNewAuthorName);
 
         authors.add(author);
         authors.add(author2);
@@ -82,8 +82,8 @@ class AuthorServiceImplTestIT {
     @Test
     void save() {
         final String newAuthorName = "This is potato";
-        AuthorDto authorDto = new AuthorDto();
-        authorDto.setName(newAuthorName);
+        AuthorDto authorDto = new AuthorDto.Builder(newAuthorName).build();
+//        authorDto.setName(newAuthorName);
 
         AuthorDto savedAuthor = authorService.save(authorDto);
 

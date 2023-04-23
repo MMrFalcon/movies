@@ -36,9 +36,7 @@ class MovieMapperTest {
         movie = new Movie();
         movie.setTitle(MOVIE_TITLE);
 
-        movieDto = new MovieDto();
-        movieDto.setTitle(MOVIE_TITLE);
-        movieDto.setAuthorId(1L);
+        movieDto = MovieDto.builder(MOVIE_TITLE).setAuthorId(1L).build();
     }
 
     @Test
@@ -50,8 +48,7 @@ class MovieMapperTest {
 
     @Test
     public void toDtoSlice() {
-        List<Movie> movies = new ArrayList<>();
-        movies.add(movie);
+        List<Movie> movies = List.of(movie);
 
         Slice<Movie> movieSlice = new SliceImpl<>(movies);
         Slice<MovieDto> movieDtoSlice = movieMapper.toDto(movieSlice);
@@ -65,8 +62,7 @@ class MovieMapperTest {
 
     @Test
     public void toEntitySlice() {
-        List<MovieDto> movies = new ArrayList<>();
-        movies.add(movieDto);
+        List<MovieDto> movies = List.of(movieDto);
 
         Slice<MovieDto> movieDtoSlice = new SliceImpl<>(movies);
         Slice<Movie> movieSlice = movieMapper.toEntity(movieDtoSlice);
@@ -80,8 +76,7 @@ class MovieMapperTest {
 
     @Test
     public void toDtoPage() {
-        List<Movie> movies = new ArrayList<>();
-        movies.add(movie);
+        List<Movie> movies = List.of(movie);
 
         Page<Movie> moviePage = new PageImpl<>(movies);
         Page<MovieDto> movieDtoPage  = movieMapper.toDto(moviePage);
@@ -95,8 +90,7 @@ class MovieMapperTest {
 
     @Test
     public void toEntityPage() {
-        List<MovieDto> movies = new ArrayList<>();
-        movies.add(movieDto);
+        List<MovieDto> movies = List.of(movieDto);
 
         Page<MovieDto> movieDtoPage = new PageImpl<>(movies);
         Page<Movie> moviePage = movieMapper.toEntity(movieDtoPage );

@@ -82,21 +82,17 @@ class MovieServiceImplTestIT {
         final String newMovieTile = "Im new here";
         final String secondNewMovieTitle = "Im new here 2";
 
-        MovieDto movieDto = new MovieDto();
-        movieDto.setTitle(newMovieTile);
-        movieDto.setMovieType(MOVIES_TYPE);
-        movieDto.setAuthorId(author.getId());
-        movieDto.setAuthorName(author.getName());
+        MovieDto movieDto = MovieDto.builder(newMovieTile)
+        .setMovieType(MOVIES_TYPE)
+        .setAuthorId(author.getId())
+        .setAuthorName(author.getName()).build();
 
-        MovieDto secondMovieDto = new MovieDto();
-        secondMovieDto.setTitle(secondNewMovieTitle);
-        secondMovieDto.setMovieType(MOVIES_TYPE);
-        secondMovieDto.setAuthorId(author.getId());
-        secondMovieDto.setAuthorName(author.getName());
+        MovieDto secondMovieDto = MovieDto.builder(secondNewMovieTitle)
+        .setMovieType(MOVIES_TYPE)
+        .setAuthorId(author.getId())
+        .setAuthorName(author.getName()).build();
 
-        List<MovieDto> moviesForSave = new ArrayList<>();
-        moviesForSave.add(movieDto);
-        moviesForSave.add(secondMovieDto);
+        List<MovieDto> moviesForSave = List.of(movieDto, secondMovieDto);
 
         List<MovieDto> savedMovies = movieService.saveAll(moviesForSave);
 
@@ -111,11 +107,10 @@ class MovieServiceImplTestIT {
     void save() {
         final String newMovieTile = "Good Movie";
 
-        MovieDto movieDto = new MovieDto();
-        movieDto.setTitle(newMovieTile);
-        movieDto.setMovieType(MOVIES_TYPE);
-        movieDto.setAuthorId(author.getId());
-        movieDto.setAuthorName(author.getName());
+        MovieDto movieDto = MovieDto.builder(newMovieTile)
+        .setMovieType(MOVIES_TYPE)
+        .setAuthorId(author.getId())
+        .setAuthorName(author.getName()).build();
 
         MovieDto savedMovie = movieService.save(movieDto);
 
