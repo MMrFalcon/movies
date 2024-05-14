@@ -16,3 +16,22 @@ Connect application with working database by editing:
 
 Replace `custom.db.address` IP value by your docker machine address.
 
+********
+## API
+
+### GET
+
+```
+http://localhost:8080/api/movies
+```
+Use provided criteria:
+```
+http://localhost:8080/api/movies?authorNameLike=falcon
+http://localhost:8080/api/movies?movieTypeIn=COMEDY,HORROR
+http://localhost:8080/api/movies?movieTypeIn=COMEDY,HORROR&authorNameLike=falcon
+```
+
+```
+http://localhost:8080/api/authors
+```
+
