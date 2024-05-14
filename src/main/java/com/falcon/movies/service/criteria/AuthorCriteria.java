@@ -14,6 +14,8 @@ public class AuthorCriteria implements Serializable {
 
     private LocalDate dateOfBirthLessThanOrEqual;
 
+    private Boolean countMovies;
+
     public Long getIdEquals() {
         return idEquals;
     }
@@ -46,20 +48,25 @@ public class AuthorCriteria implements Serializable {
         this.dateOfBirthLessThanOrEqual = dateOfBirthLessThanOrEqual;
     }
 
+    public Boolean getCountMovies() {
+        return countMovies;
+    }
+
+    public void setCountMovies(Boolean countMovies) {
+        this.countMovies = countMovies;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AuthorCriteria that = (AuthorCriteria) o;
-        return Objects.equals(idEquals, that.idEquals) &&
-                Objects.equals(nameLike, that.nameLike) &&
-                Objects.equals(dateOfBirthGreaterThanOrEqual, that.dateOfBirthGreaterThanOrEqual) &&
-                Objects.equals(dateOfBirthLessThanOrEqual, that.dateOfBirthLessThanOrEqual);
+        return Objects.equals(idEquals, that.idEquals) && Objects.equals(nameLike, that.nameLike) && Objects.equals(dateOfBirthGreaterThanOrEqual, that.dateOfBirthGreaterThanOrEqual) && Objects.equals(dateOfBirthLessThanOrEqual, that.dateOfBirthLessThanOrEqual) && Objects.equals(countMovies, that.countMovies);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idEquals, nameLike, dateOfBirthGreaterThanOrEqual, dateOfBirthLessThanOrEqual);
+        return Objects.hash(idEquals, nameLike, dateOfBirthGreaterThanOrEqual, dateOfBirthLessThanOrEqual, countMovies);
     }
 
     @Override
@@ -69,6 +76,7 @@ public class AuthorCriteria implements Serializable {
                 ", nameLike='" + nameLike + '\'' +
                 ", dateOfBirthGreaterThanOrEqual=" + dateOfBirthGreaterThanOrEqual +
                 ", dateOfBirthLessThanOrEqual=" + dateOfBirthLessThanOrEqual +
+                ", countMovies=" + countMovies +
                 '}';
     }
 }

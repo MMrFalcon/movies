@@ -2,6 +2,7 @@ package com.falcon.movies.service.query;
 
 import com.falcon.movies.dto.AuthorDto;
 import com.falcon.movies.entity.*; // for static metamodels
+import com.falcon.movies.entity.Author_;
 import com.falcon.movies.repository.AuthorRepository;
 import com.falcon.movies.service.criteria.AuthorCriteria;
 import com.falcon.movies.service.mapper.AuthorMapper;

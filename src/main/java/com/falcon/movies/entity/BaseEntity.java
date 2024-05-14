@@ -1,6 +1,7 @@
 package com.falcon.movies.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;

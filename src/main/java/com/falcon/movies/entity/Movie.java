@@ -2,7 +2,7 @@ package com.falcon.movies.entity;
 
 import com.falcon.movies.entity.enumeration.MovieType;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
