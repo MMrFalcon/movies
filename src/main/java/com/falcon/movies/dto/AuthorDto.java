@@ -15,6 +15,12 @@ public class AuthorDto {
 
     private final LocalDate dateOfBirth;
 
+    /**
+     * Variable used only in report feature.
+     * Provided by {@link com.falcon.movies.service.projection.GroupedMoviesProjection}.
+     */
+    private final Long moviesCount;
+
 
     public static Builder builder(String name) {
         return new Builder(name);
@@ -28,6 +34,15 @@ public class AuthorDto {
         return new Builder();
     }
 
+    public static Builder copy(AuthorDto authorDto) {
+        return new Builder()
+                .setId(authorDto.getId())
+                .setCreationDate(authorDto.getCreationDate())
+                .setUpdateDate(authorDto.getUpdateDate())
+                .setDateOfBirth(authorDto.getDateOfBirth())
+                .setMoviesCount(authorDto.getMoviesCount())
+                .setName(authorDto.getName());
+    }
 
     public Long getId() {
         return id;
@@ -49,6 +64,10 @@ public class AuthorDto {
         return updateDate;
     }
 
+    public Long getMoviesCount() {
+        return moviesCount;
+    }
+
     public static class Builder {
         private Long id;
 
@@ -59,6 +78,8 @@ public class AuthorDto {
         private String name;
 
         private LocalDate dateOfBirth;
+
+        private Long moviesCount;
 
         public Builder(String name) {
             this.name = name;
@@ -72,8 +93,9 @@ public class AuthorDto {
             return this;
         }
 
-        public void setName(String name) {
+        public Builder setName(String name) {
             this.name = name;
+            return this;
         }
 
         public Builder setCreationDate(LocalDate creationDate) {
@@ -91,6 +113,11 @@ public class AuthorDto {
             return this;
         }
 
+        public Builder setMoviesCount(Long moviesCount) {
+            this.moviesCount = moviesCount;
+            return this;
+        }
+
         public AuthorDto build() {
             return new AuthorDto(this);
         }
@@ -102,6 +129,7 @@ public class AuthorDto {
         this.dateOfBirth = builder.dateOfBirth;
         this.creationDate = builder.creationDate;
         this.updateDate = builder.updateDate;
+        this.moviesCount = builder.moviesCount;;
     }
 
     @Override
@@ -109,12 +137,12 @@ public class AuthorDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AuthorDto authorDto = (AuthorDto) o;
-        return Objects.equals(id, authorDto.id) && Objects.equals(creationDate, authorDto.creationDate) && Objects.equals(updateDate, authorDto.updateDate) && Objects.equals(name, authorDto.name) && Objects.equals(dateOfBirth, authorDto.dateOfBirth);
+        return Objects.equals(id, authorDto.id) && Objects.equals(creationDate, authorDto.creationDate) && Objects.equals(updateDate, authorDto.updateDate) && Objects.equals(name, authorDto.name) && Objects.equals(dateOfBirth, authorDto.dateOfBirth) && Objects.equals(moviesCount, authorDto.moviesCount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, creationDate, updateDate, name, dateOfBirth);
+        return Objects.hash(id, creationDate, updateDate, name, dateOfBirth, moviesCount);
     }
 
     @Override
@@ -125,6 +153,7 @@ public class AuthorDto {
                 ", updateDate=" + updateDate +
                 ", name='" + name + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
+                ", moviesCount=" + moviesCount +
                 '}';
     }
 }

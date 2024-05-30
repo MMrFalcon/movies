@@ -4,12 +4,11 @@ import com.falcon.movies.entity.enumeration.MovieType;
 
 import jakarta.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-public class Movie extends BaseEntity implements Serializable {
+public class Movie extends BaseEntity  {
 
     @NotNull
     @Column(nullable = false, unique = true)
@@ -28,6 +27,9 @@ public class Movie extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Author author;
+
+    @Column(name = "author_id", insertable = false, updatable = false)
+    private Long authorId;
 
     public String getTitle() {
         return title;
@@ -69,34 +71,37 @@ public class Movie extends BaseEntity implements Serializable {
         this.author = author;
     }
 
+    public Long getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Movie movie = (Movie) o;
-        return time == movie.time &&
-                title.equals(movie.title) &&
-                Objects.equals(productionDate, movie.productionDate) &&
-                movieType == movie.movieType &&
-                author.equals(movie.author);
+        return time == movie.time && Objects.equals(title, movie.title) && Objects.equals(productionDate, movie.productionDate) && movieType == movie.movieType && Objects.equals(author, movie.author) && Objects.equals(authorId, movie.authorId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), title, time, productionDate, movieType, author);
+        return Objects.hash(super.hashCode(), title, time, productionDate, movieType, author, authorId);
     }
-
 
     @Override
     public String toString() {
-        return super.toString() + " " +
-                "Movie{" +
+        return "Movie{" +
                 "title='" + title + '\'' +
                 ", time=" + time +
                 ", productionDate=" + productionDate +
                 ", movieType=" + movieType +
                 ", author=" + author +
+                ", authorId=" + authorId +
                 '}';
     }
 }

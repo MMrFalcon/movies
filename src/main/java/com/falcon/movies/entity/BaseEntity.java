@@ -2,12 +2,11 @@ package com.falcon.movies.entity;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @MappedSuperclass
-public class BaseEntity implements Serializable {
+public class BaseEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,10 +1,9 @@
 package com.falcon.movies.service.criteria;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class AuthorCriteria implements Serializable {
+public class AuthorCriteria {
 
     private Long idEquals;
 
@@ -14,7 +13,9 @@ public class AuthorCriteria implements Serializable {
 
     private LocalDate dateOfBirthLessThanOrEqual;
 
-    private Boolean countMovies;
+    private Boolean countMoviesWithJoin;
+
+    private Boolean countMoviesWithoutJoin;
 
     public Long getIdEquals() {
         return idEquals;
@@ -48,25 +49,34 @@ public class AuthorCriteria implements Serializable {
         this.dateOfBirthLessThanOrEqual = dateOfBirthLessThanOrEqual;
     }
 
-    public Boolean getCountMovies() {
-        return countMovies;
+    public Boolean getCountMoviesWithJoin() {
+        return countMoviesWithJoin;
     }
 
-    public void setCountMovies(Boolean countMovies) {
-        this.countMovies = countMovies;
+    public void setCountMoviesWithJoin(Boolean countMoviesWithJoin) {
+        this.countMoviesWithJoin = countMoviesWithJoin;
     }
+
+    public Boolean getCountMoviesWithoutJoin() {
+        return countMoviesWithoutJoin;
+    }
+
+    public void setCountMoviesWithoutJoin(Boolean countMoviesWithoutJoin) {
+        this.countMoviesWithoutJoin = countMoviesWithoutJoin;
+    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AuthorCriteria that = (AuthorCriteria) o;
-        return Objects.equals(idEquals, that.idEquals) && Objects.equals(nameLike, that.nameLike) && Objects.equals(dateOfBirthGreaterThanOrEqual, that.dateOfBirthGreaterThanOrEqual) && Objects.equals(dateOfBirthLessThanOrEqual, that.dateOfBirthLessThanOrEqual) && Objects.equals(countMovies, that.countMovies);
+        return Objects.equals(idEquals, that.idEquals) && Objects.equals(nameLike, that.nameLike) && Objects.equals(dateOfBirthGreaterThanOrEqual, that.dateOfBirthGreaterThanOrEqual) && Objects.equals(dateOfBirthLessThanOrEqual, that.dateOfBirthLessThanOrEqual) && Objects.equals(countMoviesWithJoin, that.countMoviesWithJoin) && Objects.equals(countMoviesWithoutJoin, that.countMoviesWithoutJoin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idEquals, nameLike, dateOfBirthGreaterThanOrEqual, dateOfBirthLessThanOrEqual, countMovies);
+        return Objects.hash(idEquals, nameLike, dateOfBirthGreaterThanOrEqual, dateOfBirthLessThanOrEqual, countMoviesWithJoin, countMoviesWithoutJoin);
     }
 
     @Override
@@ -76,7 +86,8 @@ public class AuthorCriteria implements Serializable {
                 ", nameLike='" + nameLike + '\'' +
                 ", dateOfBirthGreaterThanOrEqual=" + dateOfBirthGreaterThanOrEqual +
                 ", dateOfBirthLessThanOrEqual=" + dateOfBirthLessThanOrEqual +
-                ", countMovies=" + countMovies +
+                ", countMoviesWithJoin=" + countMoviesWithJoin +
+                ", countMoviesWithoutJoin=" + countMoviesWithoutJoin +
                 '}';
     }
 }

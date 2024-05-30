@@ -2,11 +2,10 @@ package com.falcon.movies.service.criteria;
 
 import com.falcon.movies.entity.enumeration.MovieType;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class MovieCriteria implements Serializable {
+public class MovieCriteria {
 
     private Long idEquals;
 

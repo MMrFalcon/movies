@@ -18,13 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.JoinType;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-public class MovieQueryService implements Serializable {
+public class MovieQueryService  {
 
     private final Logger log = LoggerFactory.getLogger(MovieQueryService.class);
 
