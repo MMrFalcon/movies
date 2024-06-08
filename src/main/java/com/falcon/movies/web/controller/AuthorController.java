@@ -64,4 +64,11 @@ public class AuthorController {
         HttpHeaders headers = ResponseHeaderGenerator.createGetResponseHeaders(authorsPage);
         return ResponseEntity.ok().headers(headers).body(authorsPage.toList());
     }
+
+    @PostMapping("/authors/seed-by-random-data/{dataCount}")
+    public ResponseEntity<Void> seedByRandomData(@PathVariable Integer dataCount) {
+        log.debug("Request for seed by random data. Data count {}", dataCount);
+        authorService.seedByRandomData(dataCount);
+        return ResponseEntity.ok().build();
+    }
 }

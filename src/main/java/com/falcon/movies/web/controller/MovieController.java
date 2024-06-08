@@ -13,10 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -53,6 +50,13 @@ public class MovieController {
         Optional<MovieDto> movieDto = movieService.getById(id);
         return movieDto.map(dto -> ResponseEntity.ok().body(dto))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/movies/seed-by-random-data/{dataCount}")
+    public ResponseEntity<Void> seedByRandomData(@PathVariable Integer dataCount) {
+        log.debug("Request for seed by random data. Data count {}", dataCount);
+        movieService.seedByRandomData(dataCount);
+        return ResponseEntity.ok().build();
     }
 
 }
