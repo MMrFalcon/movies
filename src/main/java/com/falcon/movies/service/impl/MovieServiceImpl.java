@@ -36,8 +36,14 @@ public class MovieServiceImpl extends BaseServiceImpl<Movie, MovieRepository, Mo
         log.debug("Request for seed by random data, data count: {}", dataCount);
         List<AuthorDto> authors = authorService.getAll(PageRequest.of(0, 20)).getContent();
         int listSize = authors.size();
+        boolean isOnlyOneAuthor = listSize == 1;
         for (int i = 0 ; i < dataCount ; i++) {
-            int randomAuthorIndex = ThreadLocalRandom.current().nextInt(0, listSize - 1);
+            int randomAuthorIndex;
+            if (isOnlyOneAuthor) {
+                randomAuthorIndex = 0;
+            } else {
+                randomAuthorIndex = ThreadLocalRandom.current().nextInt(0, listSize - 1);
+            }
             AuthorDto randomAuthor = authors.get(randomAuthorIndex);
             MovieDto movieForSave = MovieDto.builder().setMovieType(MovieType.COMEDY)
                     .setAuthorId(randomAuthor.getId()).setTitle(UUID.randomUUID().toString()).build();

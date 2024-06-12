@@ -34,4 +34,36 @@ http://localhost:8080/api/movies?movieTypeIn=COMEDY,HORROR&authorNameLike=falcon
 ```
 http://localhost:8080/api/authors
 ```
+# Covered topics
+## Check how one "join" can reduce performance
+1) Add some random data (this operation will take some time):
+```
+POST: /api/authors/seed-by-random-data/1000
+POST: /api/movies/seed-by-random-data/10000
+```
+2) Ask for data with and without "join":
+```
+GET: /api/authors/reports/movies-count?page=0&size=10
+GET: /api/authors/reports/movies-count-with-join?page=0&size=10
+```
+****
+You can check implementation of getReportByCriteria() and getReportByCriteriaWithJoin() inside
+[AuthorQueryService](src/main/java/com/falcon/movies/service/query/AuthorQueryService.java).
 
+Performance was tested by compareMoviesCountReportsResponseTimeForWithAndWithoutJoinStatement() 
+method inside [AuthorControllerTestIT](src/test/java/com/falcon/movies/web/controller/AuthorControllerTestIT.java).
+
+## How to check CRUD operations data in tests with EntityManager or JpaRepository
+#### Repository:
+
+createAuthor(), updateAuthor(), deleteById() inside [AuthorControllerTestIT](src/test/java/com/falcon/movies/web/controller/AuthorControllerTestIT.java).
+
+#### EntityManager:
+
+Static methods that can be called from anywhere if you provide entityManager and transaction:
+findByTitle(), countMovies() inside [AuthorControllerTestIT](src/test/java/com/falcon/movies/web/controller/AuthorControllerTestIT.java)
+
+## How to use "Specification" pattern provided by JpaSpecificationExecutor, added to any repository
+
+Handling Enum with "in" clause, "equals" for numbers and "like" for Strings:
+[MovieQueryService](src/main/java/com/falcon/movies/service/query/MovieQueryService.java) findByCriteria()

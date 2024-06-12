@@ -1,8 +1,19 @@
 package com.falcon.movies.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * Represents author data transfer object.
+ * When we use builder pattern, with final fields, we need to inform jackson library how to deserialize object
+ * passed in JSON body. In this class we provide:
+ * - @JsonDeserialize to inform jackson how to construct object.
+ * - @JsonProperty to inform jackson how to match fields with not matching setters.
+ */
+@JsonDeserialize(builder = AuthorDto.Builder.class)
 public class AuthorDto {
 
     private final Long id;
@@ -88,26 +99,31 @@ public class AuthorDto {
         public Builder() {
         }
 
+        @JsonProperty("id")
         public Builder setId(Long id) {
             this.id = id;
             return this;
         }
 
+        @JsonProperty("name")
         public Builder setName(String name) {
             this.name = name;
             return this;
         }
 
+        @JsonProperty("creationDate")
         public Builder setCreationDate(LocalDate creationDate) {
             this.creationDate = creationDate;
             return this;
         }
 
+        @JsonProperty("updateDate")
         public Builder setUpdateDate(LocalDate updateDate) {
             this.updateDate = updateDate;
             return this;
         }
 
+        @JsonProperty("dateOfBirth")
         public Builder setDateOfBirth(LocalDate dateOfBirth) {
             this.dateOfBirth = dateOfBirth;
             return this;

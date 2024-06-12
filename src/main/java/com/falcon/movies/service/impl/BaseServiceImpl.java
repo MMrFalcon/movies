@@ -56,6 +56,12 @@ public abstract class BaseServiceImpl<E extends BaseEntity, R extends BaseReposi
     }
 
     @Override
+    public void deleteAll() {
+        log.debug("Request to delete all");
+        repository.deleteAll();
+    }
+
+    @Override
     public Slice<D> getAll(Pageable pageable) {
         log.debug("Request to get all entities ");
         return repository.findAll(pageable).map(mapper::toDto);

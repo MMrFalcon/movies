@@ -4,6 +4,8 @@ import com.falcon.movies.dto.AuthorDto;
 import com.falcon.movies.service.AuthorService;
 import com.falcon.movies.service.criteria.AuthorCriteria;
 import com.falcon.movies.service.query.AuthorQueryService;
+import com.falcon.movies.web.exception.InvalidRequestException;
+import org.apache.coyote.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,5 +74,40 @@ public class AuthorController {
         log.debug("Request for seed by random data. Data count {}", dataCount);
         authorService.seedByRandomData(dataCount);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/authors")
+    public ResponseEntity<AuthorDto> saveAuthor(@RequestBody AuthorDto authorDto) throws URISyntaxException {
+        log.debug("Request for save author {}", authorDto);
+        if (authorDto.getId() != null) {
+            throw new InvalidRequestException("A new entity cannot already have and id");
+        }
+        AuthorDto savedAuthor = authorService.save(authorDto);
+        return ResponseEntity.created(new URI("/api/authors/" + savedAuthor.getId())).body(savedAuthor);
+    }
+
+    @PutMapping("/authors")
+    public ResponseEntity<AuthorDto> updateAuthor(@RequestBody AuthorDto authorDto) {
+        log.debug("Request for update author {}", authorDto);
+        if (authorDto.getId() == null) {
+            throw new InvalidRequestException("Missing id.");
+        }
+        AuthorDto savedAuthor = authorService.save(authorDto);
+        return ResponseEntity.ok(savedAuthor);
+    }
+
+
+    @DeleteMapping("/authors/delete-by-id/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        log.debug("Request for delete author by id {}", id);
+        authorService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/authors/delete-all")
+    public ResponseEntity<Void> deleteAll() {
+        log.debug("Request for delete all authors");
+        authorService.deleteAll();
+        return ResponseEntity.noContent().build();
     }
 }
