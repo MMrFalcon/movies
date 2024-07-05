@@ -19,7 +19,7 @@
         <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
         <failsafe.version>3.2.5</failsafe.version>
-
+        <jacoco.version>0.8.8</jacoco.version>
     </properties>
 
     <dependencies>
@@ -159,7 +159,7 @@
             <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.3</version>
+            <version>${jacoco.version}</version>
             <executions>
 
             <execution>
