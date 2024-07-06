@@ -1,10 +1,20 @@
 package com.falcon.movies.dto;
 
 import com.falcon.movies.entity.enumeration.MovieType;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * Represents movie data transfer object.
+ * When we use builder pattern, with final fields, we need to inform jackson library how to deserialize object
+ * passed in JSON body. In this class we provide:
+ * - @JsonDeserialize to inform jackson how to construct object.
+ * - @JsonProperty to inform jackson how to match fields with not matching setters.
+ */
+@JsonDeserialize(builder = MovieDto.Builder.class)
 public class MovieDto {
 
     private final Long id;
@@ -95,46 +105,55 @@ public class MovieDto {
         public Builder() {
         }
 
+        @JsonProperty("id")
         public Builder setId(Long id) {
             this.id = id;
             return this;
         }
 
+        @JsonProperty("title")
         public Builder setTitle(String title) {
             this.title = title;
             return this;
         }
 
+        @JsonProperty("time")
         public Builder setTime(int time) {
             this.time = time;
             return this;
         }
 
+        @JsonProperty("productionDate")
         public Builder setProductionDate(LocalDate productionDate) {
             this.productionDate = productionDate;
             return this;
         }
 
+        @JsonProperty("movieType")
         public Builder setMovieType(MovieType movieType) {
             this.movieType = movieType;
             return this;
         }
 
+        @JsonProperty("authorId")
         public Builder setAuthorId(Long authorId) {
             this.authorId = authorId;
             return this;
         }
 
+        @JsonProperty("authorName")
         public Builder setAuthorName(String authorName) {
             this.authorName = authorName;
             return this;
         }
 
+        @JsonProperty("creationDate")
         public Builder setCreationDate(LocalDate creationDate) {
             this.creationDate = creationDate;
             return this;
         }
 
+        @JsonProperty("updateDate")
         public Builder setUpdateDate(LocalDate updateDate) {
             this.updateDate = updateDate;
             return this;

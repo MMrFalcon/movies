@@ -1,12 +1,12 @@
 package com.falcon.movies.entity;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 @MappedSuperclass
-public class BaseEntity implements Serializable {
+public class BaseEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

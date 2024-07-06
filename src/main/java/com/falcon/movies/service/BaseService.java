@@ -16,6 +16,8 @@ public interface BaseService<D> {
 
     void deleteById(Long id);
 
+    void deleteAll();
+
     Slice<D> getAll(Pageable pageable);
 
     Optional<D> getById(Long id);

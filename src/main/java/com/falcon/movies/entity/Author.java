@@ -1,13 +1,12 @@
 package com.falcon.movies.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-public class Author extends BaseEntity implements Serializable {
+public class Author extends BaseEntity  {
 
     @NotNull
     @Column(nullable = false, unique = true)

@@ -6,7 +6,10 @@ import com.falcon.movies.entity.Movie;
 import com.falcon.movies.entity.enumeration.MovieType;
 import com.falcon.movies.repository.AuthorRepository;
 import com.falcon.movies.repository.MovieRepository;
+import com.falcon.movies.service.AuthorService;
 import com.falcon.movies.service.MovieService;
+import com.falcon.movies.service.mapper.AuthorMapper;
+import com.falcon.movies.service.mapper.AuthorMapperImpl;
 import com.falcon.movies.service.mapper.MovieMapper;
 import com.falcon.movies.service.mapper.MovieMapperImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,6 +43,10 @@ class MovieServiceImplTestIT {
 
     @Autowired
     private MovieRepository movieRepository;
+
+//    @Autowired
+    private AuthorService authorService;
+
     private MovieMapper movieMapper;
 
     private Author author;
@@ -50,9 +57,11 @@ class MovieServiceImplTestIT {
 
     @BeforeEach
     void setUp() {
-        movieMapper = new MovieMapperImpl();
+        AuthorMapper authorMapper = new AuthorMapperImpl();
+        authorService = new AuthorServiceImpl(authorRepository, authorMapper);
 
-        movieService = new MovieServiceImpl(movieRepository, movieMapper);
+        movieMapper = new MovieMapperImpl();
+        movieService = new MovieServiceImpl(movieRepository, movieMapper, authorService);
 
         setUpMovies();
     }
