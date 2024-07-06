@@ -51,7 +51,7 @@ You can check implementation of getReportByCriteria() and getReportByCriteriaWit
 [AuthorQueryService](src/main/java/com/falcon/movies/service/query/AuthorQueryService.java).
 
 Performance was tested by compareMoviesCountReportsResponseTimeForWithAndWithoutJoinStatement() 
-method inside [AuthorControllerTestIT](src/test/java/com/falcon/movies/web/controller/AuthorControllerTestIT.java).
+method inside [BigDataTestIT](src/test/java/com/falcon/movies/web/controller/BigDataTestIT.java).
 
 ## How to check CRUD operations data in tests with EntityManager or JpaRepository
 #### Repository:

@@ -152,6 +152,11 @@
                     <includes>
                         <include>**/*IT</include>
                     </includes>
+                    <excludes>
+                        <exclude>
+                            **/BigDataTestIT.java
+                        </exclude>
+                    </excludes>
                 </configuration>
             </plugin>
 

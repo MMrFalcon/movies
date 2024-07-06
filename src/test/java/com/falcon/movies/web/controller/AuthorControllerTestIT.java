@@ -134,50 +134,7 @@ class AuthorControllerTestIT {
                 .andExpect(status().isNotFound());
     }
 
-    /**
-     * Before each API query, table data will be truncated to avoid time distortion produced by DB caching mechanism.
-     * Time with join:    472809166
-     * Time without join: 251907375
-     */
-    @Test
-    @Transactional
-    void compareMoviesCountReportsResponseTimeForWithAndWithoutJoinStatement() throws Exception {
-        movieRepository.deleteAll();
-        authorRepository.deleteAll();
-        authorService.seedByRandomData(100);
-        movieService.seedByRandomData(1000000);
-        TestTransaction.flagForCommit();
-        TestTransaction.end();
 
-
-        TestTransaction.start();
-        long startTimeForFindWithoutJoin = System.nanoTime();
-        mockMvc.perform(get("/api/authors/reports/movies-count?page=0&size=10"))
-                .andExpect(status().isOk());
-        long endTimeForFindWithoutJoin = System.nanoTime();
-        TestTransaction.end();
-
-        TestTransaction.start();
-        movieRepository.deleteAll();
-        authorRepository.deleteAll();
-        authorService.seedByRandomData(100);
-        movieService.seedByRandomData(1000000);
-        TestTransaction.flagForCommit();
-        TestTransaction.end();
-
-        TestTransaction.start();
-        long startTimeForFindWithJoin = System.nanoTime();
-        mockMvc.perform(get("/api/authors/reports/movies-count-with-join?page=0&size=10"))
-                .andExpect(status().isOk());
-        long endTimeForFindWithJoin = System.nanoTime();
-        TestTransaction.end();
-
-        long timeWithoutJoin = endTimeForFindWithoutJoin - startTimeForFindWithoutJoin;
-        long timeWithJoin = endTimeForFindWithJoin - startTimeForFindWithJoin;
-
-        log.debug("Time with join: {}, time withoutJoin: {}", timeWithJoin, timeWithoutJoin);
-        assertTrue(timeWithoutJoin < timeWithJoin);
-    }
 
     @Test
     @Transactional
