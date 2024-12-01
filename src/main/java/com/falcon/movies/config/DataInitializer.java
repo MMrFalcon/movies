@@ -24,8 +24,8 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
 
     private final Logger log = LoggerFactory.getLogger(DataInitializer.class);
 
-    private AuthorRepository authorRepository;
-    private MovieRepository movieRepository;
+    private final AuthorRepository authorRepository;
+    private final MovieRepository movieRepository;
 
     public DataInitializer(AuthorRepository authorRepository, MovieRepository movieRepository) {
         this.authorRepository = authorRepository;

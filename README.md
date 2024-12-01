@@ -67,3 +67,20 @@ findByTitle(), countMovies() inside [AuthorControllerTestIT](src/test/java/com/f
 
 Handling Enum with "in" clause, "equals" for numbers and "like" for Strings:
 [MovieQueryService](src/main/java/com/falcon/movies/service/query/MovieQueryService.java) findByCriteria()
+
+## Capturing variables and invoking methods in a chain.
+In the implementation of the [RandomMoviePicker](src/main/java/com/falcon/movies/service/impl/util/RandomMoviePicker.java)
+the following topics were covered:
+1. **Capturing variables:** The `captureMovies` method demonstrates how to capture variables within a lambda expression.
+2. **Using the `Runnable` Functional Interface:** The `ifEmpty` method utilizes the `Runnable` interface to execute a block of code.
+3. **Using the `Consumer` Functional Interface:** The `ifNonEmptyCapture` method employs the `Consumer` interface to consume a list of movies.
+4. **Static Factory Method Pattern:** The `from` method exemplifies the usage of the Static Factory Method pattern to create instances of the `RandomMoviePicker`.
+
+All these concepts were combined to generate a list of three random movies within the
+[MovieToWatchServiceImpl](src/main/java/com/falcon/movies/service/impl/MovieToWatchServiceImpl.java).`pickMoviesToWatch`.
+
+The implementation's results can be accessed through the following API call:
+```
+GET http://localhost:8080/api/movies-to-watch
+```
+
