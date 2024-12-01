@@ -1,9 +1,7 @@
 package com.falcon.movies.web.controller;
 
-import com.falcon.movies.dto.AuthorDto;
 import com.falcon.movies.dto.MovieDto;
 import com.falcon.movies.service.MovieService;
-import com.falcon.movies.service.criteria.AuthorCriteria;
 import com.falcon.movies.service.criteria.MovieCriteria;
 import com.falcon.movies.service.query.MovieQueryService;
 import com.falcon.movies.web.exception.InvalidRequestException;
@@ -12,12 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
