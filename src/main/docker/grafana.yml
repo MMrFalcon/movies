@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  loki:
+    image: grafana/loki:3.3.2
+    ports:
+      - "3100:3100"
+    command: -config.file=/mnt/config/loki-config.yaml -config.expand-env=true
+    volumes:
+      - ./loki-config.yaml:/mnt/config/loki-config.yaml
+
+  promtail:
+    image: grafana/promtail:3.3.2
+    volumes:
+      - E:/logs:/var/log
+      - ./promtail-config.yaml:/mnt/config/promtail-config.yaml
+    command: -config.file=/mnt/config/promtail-config.yaml
+    depends_on:
+      - loki
+
+  grafana:
+    image: grafana/grafana:10.3.1
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - loki
