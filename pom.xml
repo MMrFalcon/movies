@@ -20,6 +20,7 @@
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
         <failsafe.version>3.2.5</failsafe.version>
         <jacoco.version>0.8.8</jacoco.version>
+        <loki.logback.version>1.4.0</loki.logback.version>
     </properties>
 
     <dependencies>
@@ -80,6 +81,23 @@
             <artifactId>maven-failsafe-plugin</artifactId>
             <version>${failsafe.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.loki4j</groupId>
+            <artifactId>loki-logback-appender</artifactId>
+            <version>${loki.logback.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
     </dependencies>
 
     <profiles>
@@ -103,6 +121,14 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+
+<!--        Profile for logging to the specific path on the server for Grafana support -->
+        <profile>
+            <id>grafana</id>
+            <properties>
+                <spring.profiles.active>grafana</spring.profiles.active>
+            </properties>
         </profile>
     </profiles>
 
