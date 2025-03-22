@@ -1,3 +1,8 @@
+
+
+# 📘 About Movis
+Movis is a research-driven project focused on exploring practical solutions to common backend development challenges using Spring Boot. Topics include optimizing database queries, comparing `EntityManager` vs `JpaRepository`, leveraging `JpaSpecificationExecutor`, and configuring effective monitoring with Grafana, Prometheus, Loki, and Promtail.
+
 # **Grafana Setup**
 
 The Docker Compose file **`grafana.yml`** is designed for **Windows systems**.  
