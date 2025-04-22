@@ -19,7 +19,7 @@
         <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
         <failsafe.version>3.2.5</failsafe.version>
-        <jacoco.version>0.8.8</jacoco.version>
+        <jacoco.version>0.8.11</jacoco.version>
         <loki.logback.version>1.4.0</loki.logback.version>
     </properties>
 
@@ -200,6 +200,10 @@
                 </goals>
                 <configuration>
                     <destFile>target/jacoco-unit.exec</destFile>
+                    <excludes>
+                        <exclude>**/*$HibernateProxy$*</exclude>
+                        <exclude>**/*$HibernateInstantiator$*</exclude>
+                    </excludes>
                 </configuration>
             </execution>
 
@@ -211,6 +215,10 @@
                 <configuration>
                     <destFile>target/jacoco-integration.exec</destFile>
                     <append>true</append>
+                    <excludes>
+                        <exclude>**/*$HibernateProxy$*</exclude>
+                        <exclude>**/*$HibernateInstantiator$*</exclude>
+                    </excludes>
                 </configuration>
             </execution>
 
