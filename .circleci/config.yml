@@ -9,7 +9,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:17-jdk-buster-node-browsers-legacy
+      - image: cimg/openjdk:21.0
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -43,7 +43,7 @@ jobs:
       # only integration tests
       #- run: mvn integration-test
       # run all tests
-      - run: mvn verify -Pfailsafe
+      - run: mvn verify -Pfailsafe -DskipTests=false
 
       - store_artifacts:
           path:  target
